@@ -1,0 +1,24 @@
+Team Members:
+Rishikesh Anand
+Varun Menon
+Krutik Pandya
+
+Contribution Plan:
+For the final milestone, our team plans to work together to implement and test the Bro'Lang compiler and parse tree interpreter/runtime environment. We will divide the remaining work among ourselves, with each member taking on the following tasks:
+
+Rishikesh: Implement the interpreter, including the evaluation of expressions and execution of statements.
+Varun: Implement the lexer and parser, and handle error checking and reporting.
+Krutik: Write and run automated tests to ensure the correctness and robustness of the compiler and interpreter.
+
+We will also collaborate closely to integrate our individual components and address any bugs or issues that arise. 
+
+
+
+Contributions So Far:
+Each team member has contributed equally to the project so far, with the following tasks completed:
+
+Rishikesh: Wrote the grammar and designed the language features of Bro'Lang, and set up the project repository.
+Varun: Helped refine the language design and wrote the initial version of the project proposal.
+Krutik: Contributed to the language design discussions, provided feedback on the proposal, and wrote the finalized version of the project proposal.
+
+We have also been meeting regularly to discuss progress and plan our next steps.
