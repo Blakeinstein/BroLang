@@ -5,79 +5,84 @@ prog
 block
     :   command* ;
 command
-    :   declaration | assignment | ifthenelse | whileb | forb | print | println ;
+    :   declaration | assignment | ifthenelse | whileBlock | forBlock | forRange | print | println ;
 declaration
     :   'my g' identifier ('=' data)? ';' ;
 assignment
     :   identifier '=' data ';' ;
 
 ifthenelse
-    :   'yolo' '(' expression ')' 'pls' '{' block '}' 'sus' '{' block '}' ;
-whileb
+    :   'yolo' '(' expression ')' 'pls' '{' true_block=block '}' 'sus' '{' false_block=block '}' ;
+whileBlock
     :   'let him cook' '(' expression ')' '{' block '}' ;
-forb
-    :   'until' '(' block ';' expression ';' block ')' '{' block '}' | 'until' '(' expression '::' ID '::' expression ')' '{' block '}' ;
+forBlock
+    :   'until' '(' pre=block '#' expression '#' post=block ')' '{' loop=block '}'
+    ;
+forRange
+    :   'until' '(' start=expression '::' identifier '::' end=expression ')' '{' block '}' 
+    ;
 print
     :   'say no more' vals ';' ;
 println
     :   'say' vals ';' ;
 
 vals
-    :   data (',' data)* ;
+    :   data_terms+=data (',' data_terms+=data)* ;
 data
-    :   STRING | expression ;
+    :   string | expression ;
 
 multiplicative
-    :   terminal (('*'|'/'|'%') terminal)*
+    :   oprs+=terminalData (ops+=('*'|'/'|'%') oprs+=terminalData)*
     ;
 
 additive
-    :   multiplicative (('+'|'-') multiplicative)*
+    :   oprs+=multiplicative (ops+=('+'|'-') oprs+=multiplicative)*
     ;
 
-shift
-    :   additive (('<<'|'>>') additive)*
-    ;
 
 relational
-    :   shift (('<'|'>'|'<='|'>=') shift)*
+    :   oprs+=shift (ops+=('<'|'>'|'<='|'>=') oprs+=shift)*
     ;
 
 equality
-    :   relational (('=='| '!=') relational)*
+    :   oprs+=relational (ops+=('==' | '!=') oprs+=relational)*
+    ;
+
+conditionalExpr
+    :   condition=logicalOr ('?' true_block=expression ':' false_block=conditionalExpr)?
+    ;
+
+shift
+    :   oprs+=additive (ops+=('<<'|'>>') oprs+=additive)*
     ;
 
 and
-    :   equality ( '&' equality)*
+    :   oprs+=equality ('&' oprs+=equality)*
     ;
 
 exclusiveOr
-    :   and ('^' and)*
+    :   oprs+=and ('^' oprs+=and)*
     ;
 
 inclusiveOr
-    :   exclusiveOr ('|' exclusiveOr)*
+    :   oprs+=exclusiveOr ('|' oprs+=exclusiveOr)*
     ;
 
 logicalAnd
-    :   inclusiveOr ('&&' inclusiveOr)*
+    :   oprs+=inclusiveOr ('&&' oprs+=inclusiveOr)*
     ;
 
 logicalOr
-    :   logicalAnd ( '||' logicalAnd)*
-    ;
-
-conditional
-    :   logicalOr ('?' expression ':' conditional)?
+    :   oprs+=logicalAnd ( '||' oprs+=logicalAnd)*
     ;
 
 expression
-    :   conditional
+    :   conditionalExpr
     |   additive
-    |   terminal
+    |   terminalData
     ;
 
-terminal
+terminalData
     :   number
     |   identifier
     |   '(' expression ')'
@@ -91,7 +96,11 @@ number
     : DECIMAL
     ;
 
-STRING
+string
+    : UNICODE_CHARS
+    ;
+
+UNICODE_CHARS
     :   '"' ( '\\' ~[\r\n] | ~[\\"\r\n] )* '"'
     ;
 
