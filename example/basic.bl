@@ -1,0 +1,19 @@
+dawg
+  say "Hello World";
+ 
+  my g a = 3;
+  my g b = 0;
+
+  let him cook (b < 5) {
+    say b;
+
+    yolo (b == a) pls {
+      say "b is equal to a";
+    } sus {
+      say "b is not equal to a";
+    }
+
+    b = b + 1;
+  }
+
+gg
