@@ -91,3 +91,158 @@ class Visitor(BroLangVisitor):
 
   def visitData(self, ctx:BroLangParser.DataContext):
     return self.visitChildren(ctx)
+  
+  def visitMultiplicative(self, ctx:BroLangParser.MultiplicativeContext):
+    oprs = [self.visit(opr) for opr in ctx.oprs]
+    oprs.reverse()
+    ops = [op.text for op in ctx.ops]
+    ops.reverse()
+    res = oprs[0]
+    for opr, op in zip(oprs[1:], ops):
+      match op:
+        case '*':
+          res = opr * res
+        case '/':
+          res = opr / res
+        case '%':
+          res = opr % res
+    
+    return res
+
+
+  def visitAdditive(self, ctx:BroLangParser.AdditiveContext):
+    oprs = [self.visit(opr) for opr in ctx.oprs]
+    oprs.reverse()
+    ops = [op.text for op in ctx.ops]
+    ops.reverse()
+    res = oprs[0]
+    for opr, op in zip(oprs[1:], ops):
+      match op:
+        case '+':
+          res = opr + res
+        case '-':
+          res = opr - res
+      
+    return res
+
+
+  def visitShift(self, ctx:BroLangParser.ShiftContext):
+    oprs = [self.visit(opr) for opr in ctx.oprs]
+    oprs.reverse()
+    ops = [op.text for op in ctx.ops]
+    ops.reverse()
+    res = oprs[0]
+    for opr, op in zip(oprs[1:], ops):
+      try:
+        match op:
+          case '<<':
+            res = int(opr) << int(res)
+          case '>>':
+            res = int(opr) >> int(res)
+      except Exception as e:
+        print(e)
+        print(f"{res:g} isnt an integer bro.")
+    return res
+
+
+  def visitRelational(self, ctx:BroLangParser.RelationalContext):
+    oprs = [self.visit(opr) for opr in ctx.oprs]
+    oprs.reverse()
+    ops = [op.text for op in ctx.ops]
+    ops.reverse()
+    res = oprs[0]
+    for opr, op in zip(oprs[1:], ops):
+      match op:
+        case '<':
+          res = opr < res
+        case '>':
+          res = opr > res
+        case '<=':
+          res = opr <= res
+        case '>=':
+          res = opr >= res
+    
+    return res
+
+
+  def visitEquality(self, ctx:BroLangParser.EqualityContext):
+    oprs = [self.visit(opr) for opr in ctx.oprs]
+    oprs.reverse()
+    ops = [op.text for op in ctx.ops]
+    ops.reverse()
+    res = oprs[0]
+    for opr, op in zip(oprs[1:], ops):
+      match op:
+        case '==':
+          res = opr == res
+        case '!=':
+          res = opr != res
+    
+    return res
+
+
+  def visitAnd(self, ctx:BroLangParser.AndContext):
+    oprs = [self.visit(opr) for opr in ctx.oprs]
+    return reduce(lambda acc, x : (int(acc) & int(x)) , oprs[1:], oprs[0])
+
+
+  def visitExclusiveOr(self, ctx:BroLangParser.ExclusiveOrContext):
+    oprs = [self.visit(opr) for opr in ctx.oprs]
+    oprs.reverse()
+    return reduce(lambda acc, x : (int(acc) ^ int(x)) , oprs[1:], oprs[0])
+
+
+  def visitInclusiveOr(self, ctx:BroLangParser.InclusiveOrContext):
+    oprs = [self.visit(opr) for opr in ctx.oprs]
+    oprs.reverse()
+    return reduce(lambda acc, x : (int(acc) | int(x)) , oprs[1:], oprs[0])
+
+
+  def visitLogicalAnd(self, ctx:BroLangParser.LogicalAndContext):
+    oprs = [self.visit(opr) for opr in ctx.oprs]
+    oprs.reverse()
+    return reduce(lambda acc, x : (int(acc) and int(x)) , oprs[1:], oprs[0])
+
+
+  def visitLogicalOr(self, ctx:BroLangParser.LogicalOrContext):
+    oprs = [self.visit(opr) for opr in ctx.oprs]
+    oprs.reverse()
+    return reduce(lambda acc, x : (int(acc) or int(x)) , oprs[1:], oprs[0])
+
+
+  def visitConditionalExpr(self, ctx:BroLangParser.ConditionalExprContext):
+    condition = self.visit(ctx.condition)
+
+    if len(ctx.children) == 1:
+      return condition
+
+    if condition:
+      return self.visit(ctx.true_block)
+    else:
+      return self.visit(ctx.false_block)
+
+
+  def visitExpression(self, ctx:BroLangParser.ExpressionContext):
+    return self.visitChildren(ctx)
+
+
+  def visitTerminalData(self, ctx:BroLangParser.TerminalDataContext):
+    data = self.visit(ctx.children[0])
+    
+    if isinstance(data, str):
+      self.assert_env(data)
+      data = self.data_map[data]
+  
+    return data
+
+
+  def visitIdentifier(self, ctx:BroLangParser.IdentifierContext):
+    return ctx.getText()
+
+
+  def visitNumber(self, ctx:BroLangParser.NumberContext):
+    return float(ctx.getText())
+
+
+  def visitString(self, ctx:BroLangParser.StringContext):
+    return ctx.getText().strip('\"')
