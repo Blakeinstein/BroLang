@@ -5,7 +5,7 @@ from .visitor import Visitor
 from antlr4.tree.Trees import Trees
 from antlr4 import CommonTokenStream, FileStream
 
-def execute(filepath: str, print_tree: bool = False -> None:
+def execute(filepath: str, print_tree: bool = False) -> None:
 
   lexer = BroLangLexer(FileStream(filepath))
   stream = CommonTokenStream(lexer)
