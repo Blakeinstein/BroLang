@@ -242,6 +242,15 @@ class BroLangListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by BroLangParser#negation.
+    def enterNegation(self, ctx:BroLangParser.NegationContext):
+        pass
+
+    # Exit a parse tree produced by BroLangParser#negation.
+    def exitNegation(self, ctx:BroLangParser.NegationContext):
+        pass
+
+
     # Enter a parse tree produced by BroLangParser#identifier.
     def enterIdentifier(self, ctx:BroLangParser.IdentifierContext):
         pass

@@ -79,6 +79,7 @@ logicalOr
 expression
     :   conditionalExpr
     |   additive
+    |   negation
     |   terminalData
     ;
 
@@ -86,6 +87,10 @@ terminalData
     :   number
     |   identifier
     |   '(' expression ')'
+    ;
+
+negation
+    : '!' terminalData
     ;
 
 identifier

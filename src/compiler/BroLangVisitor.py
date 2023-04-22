@@ -139,6 +139,11 @@ class BroLangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by BroLangParser#negation.
+    def visitNegation(self, ctx:BroLangParser.NegationContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by BroLangParser#identifier.
     def visitIdentifier(self, ctx:BroLangParser.IdentifierContext):
         return self.visitChildren(ctx)

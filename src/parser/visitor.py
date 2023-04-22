@@ -7,19 +7,19 @@ from compiler.BroLangVisitor import BroLangVisitor
 class Visitor(BroLangVisitor):
   data_map: dict[str, str | float] = dict()
 
- 
+
   def assert_env(self, key: str):
     if key not in self.data_map:
       raise Exception(
         f"My brother in christ, variable <{id}> not found, did you forget to declare it?"
       )
   
- 
+
   def visitProg(self, ctx:BroLangParser.ProgContext):
     self.visitChildren(ctx)
     return 0
 
- 
+
   def visitDeclaration(self, ctx:BroLangParser.DeclarationContext):
     id = self.visit(ctx.identifier())
     val = 0.0
@@ -27,7 +27,7 @@ class Visitor(BroLangVisitor):
       val = self.visit(ctx.data())
     self.data_map[id] = val
 
- 
+
   def visitAssignment(self, ctx:BroLangParser.AssignmentContext):
     id = self.visit(ctx.identifier())
     val = self.visit(ctx.data())
@@ -36,19 +36,19 @@ class Visitor(BroLangVisitor):
 
     self.data_map[id] = val
 
- 
+
   def visitIfthenelse(self, ctx:BroLangParser.IfthenelseContext):
     if self.visit(ctx.expression()):
       self.visit(ctx.true_block)
     else:
       self.visit(ctx.false_block)
 
-  
+
   def visitWhileBlock(self, ctx:BroLangParser.WhileBlockContext):
     while self.visit(ctx.expression()):
       self.visit(ctx.block())
 
-  
+
   def visitForBlock(self, ctx:BroLangParser.ForBlockContext):
     self.visit(ctx.pre)
     
@@ -56,7 +56,7 @@ class Visitor(BroLangVisitor):
       self.visit(ctx.loop)
       self.visit(ctx.post)
 
- 
+
   def visitForRange(self, ctx:BroLangParser.ForRangeContext):
     id = self.visit(ctx.identifier())
     old_val = None
@@ -227,13 +227,19 @@ class Visitor(BroLangVisitor):
 
 
   def visitTerminalData(self, ctx:BroLangParser.TerminalDataContext):
-    data = self.visit(ctx.children[0])
-    
-    if isinstance(data, str):
+    if ctx.identifier:
+      data = self.visit(ctx.identifier)
       self.assert_env(data)
-      data = self.data_map[data]
+      return self.data_map[data]
+
+    if ctx.expression:
+      return self.visit(ctx.expression)
   
-    return data
+    return self.visit(ctx.number)
+
+
+  def visitNegation(self, ctx:BroLangParser.NegationContext):
+    return (not self.visit(ctx.terminalData))
 
 
   def visitIdentifier(self, ctx:BroLangParser.IdentifierContext):
