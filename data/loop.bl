@@ -1,0 +1,9 @@
+dawg
+  until (0 :: a :: 10) {
+    yolo (!(a & 1)) pls {
+      say "a:", a, "is odd.";
+    } sus {
+      say "a:", a, "is even.";
+    }
+  }
+gg

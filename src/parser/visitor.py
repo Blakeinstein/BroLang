@@ -227,19 +227,19 @@ class Visitor(BroLangVisitor):
 
 
   def visitTerminalData(self, ctx:BroLangParser.TerminalDataContext):
-    if ctx.identifier:
-      data = self.visit(ctx.identifier)
+    if ctx.identifier():
+      data = self.visit(ctx.identifier())
       self.assert_env(data)
       return self.data_map[data]
 
-    if ctx.expression:
-      return self.visit(ctx.expression)
+    if ctx.expression():
+      return self.visit(ctx.expression())
   
-    return self.visit(ctx.number)
+    return self.visit(ctx.number())
 
 
   def visitNegation(self, ctx:BroLangParser.NegationContext):
-    return (not self.visit(ctx.terminalData))
+    return (not self.visit(ctx.terminalData()))
 
 
   def visitIdentifier(self, ctx:BroLangParser.IdentifierContext):

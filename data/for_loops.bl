@@ -1,0 +1,11 @@
+dawg
+  my g a = 3;
+
+  until(my g j = 1; # a + j < 6 # j = j + 1;) {
+    say a + j;
+  }
+
+  until(a << 2 :: a :: a * a * a) {
+    say a;
+  }
+gg
