@@ -8,7 +8,7 @@ from os.path import abspath
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
   parser.add_argument("file_path", type=Path, help="Path to the file to be executed.")
-  parser.add_argument("-p", "--print_tree", type=bool, default=False, help="Prints the tree of the program.")
+  parser.add_argument("-p", "--print_tree", action='store_true', help="Prints the tree of the program.")
 
   p = parser.parse_args()
 
