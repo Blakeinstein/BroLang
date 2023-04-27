@@ -7,8 +7,8 @@ from antlr4 import CommonTokenStream, FileStream
 
 def execute(filepath: str, print_tree: bool = False) -> None:
 
-  lexer = BroLangLexer(FileStream(filepath))
-  stream = CommonTokenStream(lexer)
+  tokens = BroLangLexer(FileStream(filepath))
+  stream = CommonTokenStream(tokens)
   parser = BroLangParser(stream)
   tree = parser.prog()
 

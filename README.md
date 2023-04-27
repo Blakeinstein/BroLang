@@ -3,7 +3,7 @@
 ## Development Environment
  - Systems: Windows, MacOs and Linux (Any Flavor)
 
- - Tools to build compiler: Python 3.10 and ANTLR 4.12
+ - Tools to build compiler: Python 3.10+ and ANTLR 4.12 
 
  - Tools to build runtime: pipenv (optioanlly pyenv, if installed python is not python 3.10)
 
