@@ -14,7 +14,6 @@ Team Members:
 Member and Responsibilities:
 
 Rishikesh Anand:
-In Progress:
 1. Primary author of the initial grammar rules.
 2. Work on efficient bash scripts for setup and execution.
 3. Implemented expression rules with precedence in ANTLR.
@@ -22,7 +21,6 @@ In Progress:
 
 /***/
 Varun Menon:
-In Progress:
 1. Contributed in Language rules.
 2. Support the development of grammar structure.
 3. Implement terminal and command nodes in ANTLR.
@@ -33,7 +31,6 @@ In Progress:
 /***/
 
 Krutik Pandya:
-In Progress:
 1. Contributed in refining grammar regulations.
 2. Document the project updates.
 3. Complete presentation and documentation for the project.
