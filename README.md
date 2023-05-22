@@ -6,7 +6,7 @@ A toy programming language inspired by BhaiLang, developed as course project for
 
 ### BroLang Setup Steps
 
-** You may also just run `./setup.sh` and the script should tell you if you need to install any tools" **
+**You may also just run `./setup.sh` and the script should tell you if you need to install any tools"**
 
 1. Install Python 3, if you do not have 3.10 install pyenv as well.
 
@@ -24,7 +24,7 @@ A toy programming language inspired by BhaiLang, developed as course project for
 
 ## How to Use
 
-** You can also pass file path to `./run.sh` and it should execute it for you. ex: `./run.sh ./data/basic.bl`. **
+**You can also pass file path to `./run.sh` and it should execute it for you. ex: `./run.sh ./data/basic.bl`.**
 
 1. Execute code using the parser package.
    
