@@ -13,4 +13,4 @@ antlr4-tools = "*"
 python_version = "3.10"
 
 [scripts]
-gen_compiler = "antlr4 -Dlanguage=Python3 src/grammar/BroLang.g4 -o src/compiler -Xexact-output-dir -visitor"
+gen_compiler = "antlr4 -Dlanguage=Python3 grammar/BroLang.g4 -o brolang/compiler -Xexact-output-dir -visitor"
